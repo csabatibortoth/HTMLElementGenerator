@@ -1,7 +1,7 @@
 //Author: Csaba Tóth https://github.com/csabatibortoth/
 //LICENCE: MIT
 //Repository: https://github.com/csabatibortoth/HTMLElementGenerator
-//Version: 0.1.0
+//Version: 0.1.1
 
 function HTMLElementGenerator(options){
     if (options !== undefined) {
@@ -196,7 +196,7 @@ function generateH6(options){
 }
 
 function appendHTMLWithElement(parent, element) {
-    if (parent.length !== 0) {
+    if (parent.length !== 1) {
         parent.append(element);
     } else {
         var div = $('<div>');

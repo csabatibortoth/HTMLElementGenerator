@@ -31,6 +31,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Releases
 
+### 0.1.1
+ #### Fix:
+  1. Fixed element generation when no parent added.
+
 ### 0.1.0
  #### Added:
   1. Core element generation
