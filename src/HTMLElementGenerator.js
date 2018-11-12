@@ -61,8 +61,9 @@ function addBasicAttributes(element,options) {
 }
 
 function generateDiv(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<div>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -76,8 +77,9 @@ function generateDiv(options){
 }
 
 function generateSpan(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<span>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -91,8 +93,9 @@ function generateSpan(options){
 }
 
 function generateParagraph(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<p>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -106,8 +109,9 @@ function generateParagraph(options){
 }
 
 function generateH1(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<h1>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -121,8 +125,9 @@ function generateH1(options){
 }
 
 function generateH2(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<h2>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -136,8 +141,9 @@ function generateH2(options){
 }
 
 function generateH3(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<h3>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -151,8 +157,9 @@ function generateH3(options){
 }
 
 function generateH4(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<h4>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -166,8 +173,9 @@ function generateH4(options){
 }
 
 function generateH5(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<h5>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -181,8 +189,9 @@ function generateH5(options){
 }
 
 function generateH6(options){
-    var parent = $('#' + options.parent);
     if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
         var element = $('<h6>');
         element = addBasicAttributes(element,options);
         appendHTMLWithElement(parent, element)
@@ -196,7 +205,7 @@ function generateH6(options){
 }
 
 function appendHTMLWithElement(parent, element) {
-    if (parent.length !== 1) {
+    if (parent.length !== 0) {
         parent.append(element);
     } else {
         var div = $('<div>');
