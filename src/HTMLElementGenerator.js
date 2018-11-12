@@ -196,7 +196,7 @@ function generateH6(options){
 }
 
 function appendHTMLWithElement(parent, element) {
-    if (parent.length !== 0) {
+    if (parent.length !== 1) {
         parent.append(element);
     } else {
         var div = $('<div>');
