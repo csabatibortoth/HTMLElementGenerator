@@ -57,6 +57,23 @@ function addBasicAttributes(element,options) {
     element.attr('id',options.id);
     element.addClass(options.class);
     if(options.text != undefined) element.text(options.text);
+    element.change(function () {
+        if (options.onchange !== undefined) {
+            options.onchange(options.data);
+        }
+    });
+
+    element.on(function () {
+        if (options.onchange !== undefined) {
+            options.onchange(options.data);
+        }
+    });
+
+    element.click(function () {
+        if (options.onclick !== undefined) {
+            options.onclick(options.data);
+        }
+    });
     return element;
 }
 
