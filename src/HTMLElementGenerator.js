@@ -1,7 +1,7 @@
 //Author: Csaba Tóth https://github.com/csabatibortoth/
 //LICENCE: MIT
 //Repository: https://github.com/csabatibortoth/HTMLElementGenerator
-//Version: 0.1.2
+//Version: 0.2.0
 
 function HTMLElementGenerator(options){
     if (options !== undefined) {
@@ -57,6 +57,23 @@ function addBasicAttributes(element,options) {
     element.attr('id',options.id);
     element.addClass(options.class);
     if(options.text != undefined) element.text(options.text);
+    element.change(function () {
+        if (options.onchange !== undefined) {
+            options.onchange(options.data);
+        }
+    });
+
+    element.on(function () {
+        if (options.onchange !== undefined) {
+            options.onchange(options.data);
+        }
+    });
+
+    element.click(function () {
+        if (options.onclick !== undefined) {
+            options.onclick(options.data);
+        }
+    });
     return element;
 }
 
