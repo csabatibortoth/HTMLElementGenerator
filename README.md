@@ -31,6 +31,11 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Releases
 
+### 0.2.0
+ #### Added:
+ 1. onClick event for elements
+ 2. onChange event for elements
+
 ### 0.1.2
  #### Fix:
   1. Fixed element generation.
