@@ -33,6 +33,9 @@ function HTMLElementGenerator(options){
             case "h6":
                 generateH6(options);
                 break;
+            case "img":
+                generateIMG(options);
+                break;
             
             default:
                 generateError(wrongInputTypeError({
@@ -220,6 +223,25 @@ function generateH6(options){
         }));
     }
 }
+
+function generateIMG(options){
+    if (options.parent !== undefined) {
+        var parent = $('body')
+        if(options.parent !== "") parent = $('#' + options.parent);
+        var element = $('<img>');
+        element = addBasicAttributes(element,options);
+        element.attr("src",options.src);
+        element.attr("alt",options.alt);
+        appendHTMLWithElement(parent, element)
+    } else {
+        generateError(undefinedError({
+            vname: "options.parent",
+            line: 167,
+            fname: "generateH6"
+        }));
+    }
+}
+
 
 function appendHTMLWithElement(parent, element) {
     if (parent.length !== 0) {
