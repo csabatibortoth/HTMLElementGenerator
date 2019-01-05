@@ -32,6 +32,10 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Releases
 
+### 0.2.1
+ #### Added: 
+ 1. IMG generation
+
 ### 0.2.0
  #### Added:
  1. onClick event for elements

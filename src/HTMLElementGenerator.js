@@ -1,7 +1,7 @@
 //Author: Csaba Tóth https://github.com/csabatibortoth/
 //LICENCE: MIT
 //Repository: https://github.com/csabatibortoth/HTMLElementGenerator
-//Version: 0.2.0
+//Version: 0.2.1
 
 function HTMLElementGenerator(options){
     if (options !== undefined) {
