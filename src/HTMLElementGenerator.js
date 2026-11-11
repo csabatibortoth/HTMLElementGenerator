@@ -1,339 +1,94 @@
 //Author: Csaba Tóth https://github.com/csabatibortoth/
 //LICENCE: MIT
 //Repository: https://github.com/csabatibortoth/HTMLElementGenerator
-//Version: 0.2.1
+//Version: 0.3.0
 
-function HTMLElementGenerator(options){
-    if (options !== undefined) {
-        switch (options.elementType) {
-            case "div":
-                generateDiv(options);
-                break;
-            case "span":
-                generateSpan(options);
-                break;
-            case "p":
-                generateParagraph(options);
-                break;
-            case "h1":
-                generateH1(options);
-                break;
-            case "h2":
-                generateH2(options);
-                break;
-            case "h3":
-                generateH3(options);
-                break;
-            case "h4":
-                generateH4(options);
-                break;
-            case "h5":
-                generateH5(options);
-                break;
-            case "h6":
-                generateH6(options);
-                break;
-            case "img":
-                generateIMG(options);
-                break;
-            
-            default:
-                generateError(wrongInputTypeError({
-                    vname: "options",
-                    line: 3,
-                    fname: "HTMLControlGenerator"
-                }, options));
-                break;
-        }
-    } else {
-        generateError(undefinedError({
-            vname: "options",
-            line: "2",
-            fname: "HTMLControlGenerator"
-        }));
+import {
+    noBodyOrParentError,
+    reportError,
+    undefinedError,
+    wrongInputTypeError,
+} from './errors.js';
+
+// Supported element types, each mapped to the extra options copied onto it as attributes.
+const ELEMENT_ATTRIBUTES = new Map([
+    ['div', []],
+    ['span', []],
+    ['p', []],
+    ['h1', []],
+    ['h2', []],
+    ['h3', []],
+    ['h4', []],
+    ['h5', []],
+    ['h6', []],
+    ['img', ['src', 'alt']],
+]);
+
+export const supportedElements = Object.freeze([...ELEMENT_ATTRIBUTES.keys()]);
+
+function createElement(options, attributes) {
+    const { id, class: className, text, data, onclick, onchange } = options;
+    const element = document.createElement(options.elementType);
+
+    if (id != null) element.id = id;
+    if (className) element.className = className;
+    if (text != null) element.textContent = text;
+    for (const name of attributes) {
+        if (options[name] != null) element.setAttribute(name, options[name]);
     }
-}
 
-/*-----------------HTML ELEMENT GENERATION-----------------------*/
-
-function addBasicAttributes(element,options) {
-    element.attr('id',options.id);
-    element.addClass(options.class);
-    if(options.text != undefined) element.text(options.text);
-    element.change(function () {
-        if (options.onchange !== undefined) {
-            options.onchange(options.data);
-        }
-    });
-
-    element.on(function () {
-        if (options.onchange !== undefined) {
-            options.onchange(options.data);
-        }
-    });
-
-    element.click(function () {
-        if (options.onclick !== undefined) {
-            options.onclick(options.data);
-        }
-    });
+    // Listeners are only attached when a handler was actually provided.
+    if (typeof onclick === 'function') {
+        element.addEventListener('click', () => onclick(data));
+    }
+    if (typeof onchange === 'function') {
+        element.addEventListener('change', () => onchange(data));
+    }
     return element;
 }
 
-function generateDiv(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<div>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 41,
-            fname: "generateDiv"
-        }));
+/**
+ * Generates an HTML element and appends it to its parent.
+ *
+ * @param {object} options
+ * @param {string} options.elementType one of `supportedElements`
+ * @param {string} [options.parent] id of the parent element; omitted or '' appends to body
+ * @param {string} [options.id]
+ * @param {string} [options.class]
+ * @param {string} [options.text]
+ * @param {string} [options.src] img only
+ * @param {string} [options.alt] img only
+ * @param {*} [options.data] passed to the onclick / onchange handlers
+ * @param {(data: *) => void} [options.onclick]
+ * @param {(data: *) => void} [options.onchange]
+ * @returns {HTMLElement|null} the generated element, or null when generation failed
+ */
+export function HTMLElementGenerator(options) {
+    if (options == null) {
+        return reportError(undefinedError('options', 'HTMLElementGenerator'));
     }
-}
 
-function generateSpan(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<span>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 56,
-            fname: "generateSpan"
-        }));
+    const attributes = ELEMENT_ATTRIBUTES.get(options.elementType);
+    if (!attributes) {
+        return reportError(wrongInputTypeError('options', 'HTMLElementGenerator', options));
     }
-}
 
-function generateParagraph(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<p>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 74,
-            fname: "generateParagraph"
-        }));
+    const { body } = document;
+    const parent = options.parent ? document.getElementById(options.parent) : body;
+    if (!parent && !body) {
+        return reportError(noBodyOrParentError('parent', 'HTMLElementGenerator'));
     }
-}
 
-function generateH1(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<h1>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 92,
-            fname: "generateH1"
-        }));
-    }
-}
-
-function generateH2(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<h2>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 107,
-            fname: "generateH2"
-        }));
-    }
-}
-
-function generateH3(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<h3>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 122,
-            fname: "generateH3"
-        }));
-    }
-}
-
-function generateH4(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<h4>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 137,
-            fname: "generateH4"
-        }));
-    }
-}
-
-function generateH5(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<h5>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 152,
-            fname: "generateH5"
-        }));
-    }
-}
-
-function generateH6(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<h6>');
-        element = addBasicAttributes(element,options);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 167,
-            fname: "generateH6"
-        }));
-    }
-}
-
-function generateIMG(options){
-    if (options.parent !== undefined) {
-        var parent = $('body')
-        if(options.parent !== "") parent = $('#' + options.parent);
-        var element = $('<img>');
-        element = addBasicAttributes(element,options);
-        element.attr("src",options.src);
-        element.attr("alt",options.alt);
-        appendHTMLWithElement(parent, element)
-    } else {
-        generateError(undefinedError({
-            vname: "options.parent",
-            line: 167,
-            fname: "generateH6"
-        }));
-    }
-}
-
-
-function appendHTMLWithElement(parent, element) {
-    if (parent.length !== 0) {
+    const element = createElement(options, attributes);
+    if (parent) {
         parent.append(element);
     } else {
-        var div = $('<div>');
-        div.append(element);
-        if ($('body').length !== 0) {
-            $('body').append(div);
-        } else {
-            generateError(noBodyOrParentError({
-                vname: "parent",
-                line: 496,
-                fname: "appendHTMLWithElement"
-            }));
-        }
+        // Unknown parent id: fall back to a wrapper div on the body.
+        const wrapper = document.createElement('div');
+        wrapper.append(element);
+        body.append(wrapper);
     }
+    return element;
 }
 
-/*-----------------ERROR HANDLING-----------------------*/
-function undefinedError(options) {
-    var undefinedError = {
-        errorCode: 0,
-        errorString: "undefined",
-        errorVariable: options.vname,
-        errorLine: options.line,
-        errorFunction: options.fname
-    };
-    return undefinedError;
-}
-
-function wrongInputTypeError(options, inputOptions) {
-    var wrongInputTypeError = {
-        errorCode: 1,
-        errorString: "Wrong Input Type defined",
-        errorVariable: options.vname,
-        errorLine: options.line,
-        errorFunction: options.fname,
-        errorMiscInfo: inputOptions
-    }
-    return wrongInputTypeError;
-}
-
-function noBodyOrParentError(options) {
-    var noBodyOrParentError = {
-        errorCode: 2,
-        errorString: "No body or parent to append input!",
-        errorLine: options.line,
-        errorFunction: options.fname,
-        errorMiscInfo: options.errorMiscInfo
-    };
-}
-
-function unsupportedBrowser(options) {
-    var unsupportedBrowser = {
-        errorCode: 999,
-        errorString: "Unsupported browser",
-        errorLine: options.line,
-        errorFunction: options.fname,
-        errorMiscInfo: options.errorMiscInfo
-    }
-    return unsupportedBrowser;
-}
-
-function generateError(error) {
-    console.log(error);
-    var div = $('<div>');
-    var errorText = "Error Code: " + error.errorCode + ", Error description: " + error.errorString + "! For more information see console!";
-    div.text(errorText);
-    if ($('body').length) {
-        $('body').append(div);
-    } else console.log(error);
-}
-
-function getBrowserName() {
-    var navAgent = navigator.userAgent;
-    var browserName;
-    if ((versionOffset = navAgent.indexOf("Opera")) != -1) {
-        browserName = "Opera";
-    } else if ((versionOffset = navAgent.indexOf("MSIE")) != -1) {
-        browserName = "Microsoft Internet Explorer";
-    } else if ((versionOffset = navAgent.indexOf("Chrome")) != -1) {
-        browserName = "Chrome";
-    } else if ((versionOffset = navAgent.indexOf("Safari")) != -1) {
-        browserName = "Safari";
-    } else if ((versionOffset = navAgent.indexOf("Firefox")) != -1) {
-        browserName = "Firefox";
-    } else if ((nameOffset = navAgent.lastIndexOf(' ') + 1) < (versionOffset = navAgent.lastIndexOf('/'))) {
-        browserName = navAgent.substring(nameOffset, versionOffset);
-        if (browserName.toLowerCase() == browserName.toUpperCase()) {
-            browserName = navigator.appName;
-        }
-    }
-    return browserName;
-}
+export default HTMLElementGenerator;
