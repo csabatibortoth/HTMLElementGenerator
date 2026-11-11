@@ -1,0 +1,17 @@
+{
+  "name": "htmlelementgenerator",
+  "version": "0.3.0",
+  "description": "Dependency-free ES module to generate HTML5 elements.",
+  "type": "module",
+  "main": "./src/HTMLElementGenerator.js",
+  "exports": "./src/HTMLElementGenerator.js",
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csabatibortoth/HTMLElementGenerator.git"
+  },
+  "author": "Csaba Tóth (https://github.com/csabatibortoth)",
+  "license": "MIT"
+}
