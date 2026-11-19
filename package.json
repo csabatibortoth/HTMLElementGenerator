@@ -1,6 +1,6 @@
 {
   "name": "htmlelementgenerator",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Dependency-free ES module to generate HTML5 elements.",
   "type": "module",
   "main": "./src/HTMLElementGenerator.js",
