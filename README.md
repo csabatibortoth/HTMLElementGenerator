@@ -1,5 +1,9 @@
 # HTMLElementGenerator
 
+> **This project is no longer developed.** HTMLElementGenerator is being folded into [Athena UI](https://github.com/csabatibortoth/athena-ui)
+> (`athena-ui-js` on npm), which carries the same `HTMLElementGenerator(options)` function. This repository stays online for now so that existing projects keep working, but it
+> receives no new features and no fixes. Please move to Athena UI. The repository will be archived at a later date.
+
 It's a dependency-free ES module to generate HTML5 elements. It can generate the following elements:
 
 * div
@@ -47,6 +51,10 @@ It returns the generated element, or `null` if the generation failed.
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Releases
+
+### 0.3.1
+ #### Changed:
+ 1. Notice added: the project is no longer developed, its function moves into Athena UI. No change to the code.
 
 ### 0.3.0
  #### Changed:

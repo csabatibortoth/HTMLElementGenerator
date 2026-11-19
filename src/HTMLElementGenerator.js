@@ -1,7 +1,7 @@
 //Author: Csaba Tóth https://github.com/csabatibortoth/
 //LICENCE: MIT
 //Repository: https://github.com/csabatibortoth/HTMLElementGenerator
-//Version: 0.3.0
+//Version: 0.3.1
 
 import {
     noBodyOrParentError,
